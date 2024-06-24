@@ -9,38 +9,42 @@ import { Notes } from './models/note.model';
 export class AppComponent implements OnInit {
 
   public isPaused : boolean = false;
-  public stepInterval: any;
+  public processInterval: any;
+  public renderInterval: any;
   public noteInterval: any;
-  public readonly fps: number = 144;
+  public readonly fps: number = 100;
 
   public canvas: HTMLCanvasElement;
   public canvasCtx: CanvasRenderingContext2D;
 
   public captureLineX: number = 100;
 
-  public readonly noteMovement: number = 10;
-  public readonly nps: number = 8;
+  public readonly noteMovement: number = 2;
+  public readonly nps: number = 100;
   public readonly noteRadius = 15;
   public readonly rowCount = 11;
   public readonly noteSpacing = (this.noteRadius*2)+10;
   public noteArray: Notes[] = [];
 
 
-  public step = () => {
-    this.clearFrame();
+  public processing = () => {
     this.moveNotes();
-    this.renderFrame();
   }
   public addNotes = () => {
     const row = this.getRandomInt(1, this.rowCount)*this.noteSpacing;
     this.noteArray.push({ bmol: false, x: this.canvas.width, y: row });
   }
+  public renderFrame = () => {
+    this.clearFrame();
+    this.renderObjects();
+  }
 
   public ngOnInit(): void {
     this.canvas = document.getElementsByTagName('canvas')[0];
     this.canvasCtx = this.canvas.getContext('2d');
-    this.stepInterval = setInterval(this.step, 1000/this.fps);
+    this.renderInterval = setInterval(this.renderFrame, 1000/this.fps);
     this.noteInterval = setInterval(this.addNotes, 1000/this.nps);
+    this.processInterval = setInterval(this.processing, 1000/this.nps);
   }
 
   public clearFrame() {
@@ -75,7 +79,7 @@ export class AppComponent implements OnInit {
     this.canvasCtx.globalAlpha = 1;
   }
 
-  public renderFrame() {
+  public renderObjects() {
     this.renderLines();
     for(let i = 0; i < this.noteArray.length; i++){
       this.renderNote(this.noteArray[i]);
@@ -87,7 +91,7 @@ export class AppComponent implements OnInit {
   }
 
   public manualStep(){
-    this.step();
+    this.processing();
   }
 
   public printInfo(){
@@ -105,7 +109,7 @@ export class AppComponent implements OnInit {
   public debugOn() {
     this.isPaused = true;
     clearInterval(this.noteInterval);
-    clearInterval(this.stepInterval);
+    clearInterval(this.processInterval);
   }
 
   public debugOff() {
