@@ -1,0 +1,30 @@
+.canvas-style {
+  border: 1px solid red;
+  margin: 2rem;
+  width: 800px;
+  height: 700px;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  background-color: darkgreen;
+  color: white;
+  width: fit-content;
+  height: fit-content;
+  margin: 0.5rem;
+  border-radius: 1rem;
+  user-select: none;
+}
+
+.btn:hover {
+  filter: brightness(125%);
+}
+
+.btn:active {
+  filter: brightness(75%);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
