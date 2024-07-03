@@ -19,22 +19,27 @@ export class AppComponent implements OnInit {
 
   public captureLineX: number = 100;
 
-  public readonly noteMovement: number = 2;
-  public readonly nps: number = 100;
-  public readonly noteRadius = 15;
+  public readonly noteMovement: number = 10;
+  public readonly nps: number = 5;
+  public readonly noteXRadius = 40;
+  public readonly noteYRadius = 20;
+  public readonly fontSize = 20;
   public readonly rowCount = 11;
-  public readonly noteSpacing = (this.noteRadius*2)+10;
+  public readonly noteSpacing = (this.noteYRadius*2);
   public noteArray: Notes[] = [];
 
 
-  public processing = () => {
+  protected processing = () => {
     this.moveNotes();
   }
-  public addNotes = () => {
+
+  protected addNotes = () => {
     const row = this.getRandomInt(1, this.rowCount)*this.noteSpacing;
-    this.noteArray.push({ bmol: false, x: this.canvas.width, y: row });
+    const isBmol: boolean = this.getRandomInt(0, 2) == 1;
+    this.noteArray.push({ bmol: isBmol, x: this.canvas.width, y: row });
   }
-  public renderFrame = () => {
+
+  protected renderFrame = () => {
     this.clearFrame();
     this.renderObjects();
   }
@@ -44,27 +49,39 @@ export class AppComponent implements OnInit {
     this.canvasCtx = this.canvas.getContext('2d');
     this.renderInterval = setInterval(this.renderFrame, 1000/this.fps);
     this.noteInterval = setInterval(this.addNotes, 1000/this.nps);
-    this.processInterval = setInterval(this.processing, 1000/this.nps);
+    this.processInterval = setInterval(this.processing, 1);
+
+    this.canvasCtx.font = `${this.fontSize*2}px Arial`;
+  }
+
+  public renderObjects() {
+    this.renderLines();
+    this.renderCaptureLine();
+    for(let i = 0; i < this.noteArray.length; i++){
+      this.renderNote(this.noteArray[i]);
+    }
   }
 
   public clearFrame() {
     this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  public moveNotes() {
+  protected moveNotes() {
     this.noteArray = this.noteArray.filter(note => note.x >= this.captureLineX);
     for(let i = 0; i < this.noteArray.length; i++){
       this.noteArray[i].x -= this.noteMovement;
     }
   }
 
-  public renderNote(note: Notes) {
+  protected renderNote(note: Notes) {
     this.canvasCtx.beginPath();
-    this.canvasCtx.arc(note.x, note.y, this.noteRadius, 0, 2 * Math.PI);
+    this.canvasCtx.ellipse(note.x, note.y, this.noteXRadius, this.noteYRadius, 0, 0, 2 * Math.PI);
     this.canvasCtx.stroke();
+    if(!note.bmol) return;
+    this.canvasCtx.fillText("♭", note.x-(this.noteXRadius+this.fontSize/2), note.y+this.noteYRadius+this.fontSize/2);
   }
 
-  public renderLines() {
+  protected renderLines() {
     for(let i = 1; i <= this.rowCount; i++){
       if(i%2 != 0){
         this.canvasCtx.globalAlpha = 0;
@@ -72,24 +89,25 @@ export class AppComponent implements OnInit {
         this.canvasCtx.globalAlpha = 1;
       }
       this.canvasCtx.beginPath();
-      this.canvasCtx.moveTo(this.captureLineX, i*this.noteSpacing);
+      this.canvasCtx.moveTo(0, i*this.noteSpacing);
       this.canvasCtx.lineTo(this.canvas.width, i*this.noteSpacing);
       this.canvasCtx.stroke();
     }
     this.canvasCtx.globalAlpha = 1;
   }
 
-  public renderObjects() {
-    this.renderLines();
-    for(let i = 0; i < this.noteArray.length; i++){
-      this.renderNote(this.noteArray[i]);
-    }
+  protected renderCaptureLine() {
+
   }
 
+  /**
+   * Gera um número aleatório de min(inclusive) até max(exclusive)
+   */
   public getRandomInt(min: number = 0, max: number): number {
     return min + Math.floor(Math.random() * max);
   }
 
+  // debug info
   public manualStep(){
     this.processing();
   }
