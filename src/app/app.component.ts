@@ -8,33 +8,42 @@ import { Notes } from './models/note.model';
 })
 export class AppComponent implements OnInit {
 
-  public isPaused : boolean = false;
   public processInterval: any;
   public renderInterval: any;
   public noteInterval: any;
-  public readonly fps: number = 100;
+  public readonly fps: number = 144;
+  public isPaused : boolean = false;
 
   public canvas: HTMLCanvasElement;
   public canvasCtx: CanvasRenderingContext2D;
 
-  public captureLineX: number = 100;
-
-  public readonly noteMovement: number = 10;
+  // how fast the notes will be moving on the screen
+  public readonly noteMovement: number = 2;
+  // notes per second
   public readonly nps: number = 5;
+  public noteArray: Notes[] = [];
   public readonly noteXRadius = 40;
   public readonly noteYRadius = 20;
   public readonly fontSize = 20;
-  public readonly rowCount = 11;
-  public readonly noteSpacing = (this.noteYRadius*2);
-  public noteArray: Notes[] = [];
 
+  public readonly fixedRowsCount = 11;
+  // where notes will spawn, will move the starting index to here
+  public readonly startingRow = 5;
+  public readonly rowSpacing = (this.noteYRadius*2);
+
+
+  // x coord where the notes have to be pressed
+  public xNoteCaptureRegion: number = 100;
+  // margin of error of how much you can miss the press on a specific note
+  public xNoteCaptureOffset: number = this.noteXRadius/3;
 
   protected processing = () => {
     this.moveNotes();
   }
 
   protected addNotes = () => {
-    const row = this.getRandomInt(1, this.rowCount)*this.noteSpacing;
+    const chosenRow = this.getRandomInt(1, this.fixedRowsCount) + this.startingRow;
+    const row = (chosenRow*this.rowSpacing);
     const isBmol: boolean = this.getRandomInt(0, 2) == 1;
     this.noteArray.push({ bmol: isBmol, x: this.canvas.width, y: row });
   }
@@ -55,11 +64,11 @@ export class AppComponent implements OnInit {
   }
 
   public renderObjects() {
-    this.renderLines();
-    this.renderCaptureLine();
     for(let i = 0; i < this.noteArray.length; i++){
       this.renderNote(this.noteArray[i]);
     }
+    this.renderLines(1, this.fixedRowsCount, 0, this.canvas.width);
+    this.renderCaptureLine();
   }
 
   public clearFrame() {
@@ -67,30 +76,40 @@ export class AppComponent implements OnInit {
   }
 
   protected moveNotes() {
-    this.noteArray = this.noteArray.filter(note => note.x >= this.captureLineX);
+    this.noteArray = this.noteArray.filter(note => note.x >= this.xNoteCaptureRegion);
     for(let i = 0; i < this.noteArray.length; i++){
       this.noteArray[i].x -= this.noteMovement;
     }
   }
 
   protected renderNote(note: Notes) {
+    this.canvasCtx.fillStyle = "black";
     this.canvasCtx.beginPath();
     this.canvasCtx.ellipse(note.x, note.y, this.noteXRadius, this.noteYRadius, 0, 0, 2 * Math.PI);
-    this.canvasCtx.stroke();
+    this.canvasCtx.fill();
+    const lineOverflow = 20;
+    this.renderLines(this.fixedRowsCount+1, note.y/this.rowSpacing, note.x-this.noteXRadius-lineOverflow, note.x+this.noteXRadius+lineOverflow);
     if(!note.bmol) return;
     this.canvasCtx.fillText("♭", note.x-(this.noteXRadius+this.fontSize/2), note.y+this.noteYRadius+this.fontSize/2);
   }
 
-  protected renderLines() {
-    for(let i = 1; i <= this.rowCount; i++){
+  /**
+   * draws lines on the screen
+   * @param yStartIndex the Y index where the line starts, inclusive
+   * @param yEndIndex the Y index where the line ends, inclusive
+   * @param xStartPos the X start position of the line
+   * @param xEndPos the X end position of the line
+   */
+  protected renderLines(yStartIndex: number, yEndIndex: number, xStartPos: number, xEndPos: number) {
+    for(let i = yStartIndex; i <= yEndIndex; i++){
       if(i%2 != 0){
         this.canvasCtx.globalAlpha = 0;
       }else{
         this.canvasCtx.globalAlpha = 1;
       }
       this.canvasCtx.beginPath();
-      this.canvasCtx.moveTo(0, i*this.noteSpacing);
-      this.canvasCtx.lineTo(this.canvas.width, i*this.noteSpacing);
+      this.canvasCtx.moveTo(xStartPos, i*this.rowSpacing);
+      this.canvasCtx.lineTo(xEndPos, i*this.rowSpacing);
       this.canvasCtx.stroke();
     }
     this.canvasCtx.globalAlpha = 1;
