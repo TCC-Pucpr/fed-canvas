@@ -1,19 +1,20 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 
-export class Game extends Scene
-{
+export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
     gameText: Phaser.GameObjects.Text;
 
-    constructor ()
-    {
+    constructor () {
         super('Game');
     }
+    
+    public preload(): void {
+        throw new Error('Method not implemented.');
+    }
 
-    create ()
-    {
+    public create(): void {
         this.camera = this.cameras.main;
         this.camera.setBackgroundColor(0x00ff00);
 
@@ -29,8 +30,7 @@ export class Game extends Scene
         EventBus.emit('current-scene-ready', this);
     }
 
-    changeScene ()
-    {
+    public changeScene(): void {
         this.scene.start('GameOver');
     }
 }
