@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "fed-tauri-phaser",
-    "version": "0.2.0"
+    "version": "his script auto updates tauri to match the npm project version"
   },
   "tauri": {
     "allowlist": {

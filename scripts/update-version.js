@@ -51,7 +51,9 @@ function run() {
             fs.writeFileSync(`${appDir}/${tauriConfigFile}`, JSON.stringify(tauriConfig, null, 2));
         } catch (error) {
             if(process.argv[2] === "set" || process.argv[2] === "s"){
-                console.error('invalid version number, please change it and try again');
+                console.error('invalid version number! The correct format is [major].[minor].[patch]');
+                console.error('ex. > npm run version set 1.2.3');
+                console.error('Please change it and try again');
             } else {
                 console.error('something went wrong!');
             }
@@ -63,8 +65,9 @@ function run() {
 function help(){
     console.log("this script auto updates tauri to match the npm project version");
     console.log("");
-    console.log("p patch         ups patch version");
-    console.log("m minor         ups minor version");
-    console.log("M major         ups major version");
+    console.log("p patch                ups patch version");
+    console.log("m minor                ups minor version");
+    console.log("M major                ups major version");
+    console.log("s set [version]        sets version to specified number");
     console.log("");
 }

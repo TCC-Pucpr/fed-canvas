@@ -15,7 +15,8 @@ export class MainMenu extends Scene {
     public create(): void {
         this.background = this.add.image(512, 384, 'background');
         
-        this.logo = this.add.image(512, 300, 'logo').setDepth(100);
+        let { width, height } = this.sys.game.canvas;
+        this.logo = this.add.image(width, height/2, 'logo').setDepth(100);
         
         this.title = this.add.text(512, 460, 'teste123', {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
@@ -44,8 +45,8 @@ export class MainMenu extends Scene {
         } else {
             this.logoTween = this.tweens.add({
                 targets: this.logo,
-                x: { value: 750, duration: 3000, ease: 'Back.easeInOut' },
-                y: { value: 80, duration: 1500, ease: 'Sine.easeOut' },
+                x: { value: 0, duration: 1000, ease: 'Sine.InOut'},
+                y: { value: 0, duration: 750, ease: 'Quintic.InOut'},
                 yoyo: true,
                 repeat: -1,
                 onUpdate: () => {
