@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import Phaser from "phaser";
 import StartGame from "./main";
 import { EventBus } from "./EventBus";
