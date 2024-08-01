@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "tauri": "tauri",
     "native": "tauri dev",
-    "build-native": "export NO_STRIP=true && tauri build"
+    "build-native": "export NO_STRIP=true && tauri build",
+    "version": "node scripts/update-version.js"
   },
   "private": true,
   "dependencies": {
