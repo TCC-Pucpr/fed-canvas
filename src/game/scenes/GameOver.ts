@@ -26,10 +26,6 @@ export class GameOver extends Scene {
         EventBus.emit('current-scene-ready', this);
     }
     
-    public preload(): void {
-        throw new Error('Method not implemented.');
-    }
-
     public changeScene(): void {
         this.scene.start('MainMenu');
     }

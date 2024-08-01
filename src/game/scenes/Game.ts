@@ -9,10 +9,6 @@ export class Game extends Scene {
     constructor () {
         super('Game');
     }
-    
-    public preload(): void {
-        throw new Error('Method not implemented.');
-    }
 
     public create(): void {
         this.camera = this.cameras.main;
