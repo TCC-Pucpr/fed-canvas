@@ -35,5 +35,5 @@ jobs:
             echo $RELEASE_VERSION
             echo ${{ steps.vars.outputs.tag }}
             ls -l
-            node ../../scripts/check-version.js ${{ steps.vars.outputs.tag }}
+            npm run ver-check ${{ steps.vars.outputs.tag }}
   
