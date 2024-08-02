@@ -7,8 +7,8 @@ run();
 function run() {
 
     let tauriConfig = require(tauriConfigFile);
-    
     let operation = "";
+
     switch(process.argv[2]) {
         case "p":
         case "patch":
@@ -31,25 +31,22 @@ function run() {
                 operation = process.argv[3].replace('/\D/', '');
             }
             break;
-        case "h":
-        case "help":
-            help();
-            return;
         default:
             help();
             return;
     }
 
     const appDir = dirname(require.main.filename);
-
     const exec = require('child_process').exec;
     
     exec(`npm version ${operation} --no-git-tag-version`, (err, stdout) => {
         try{
-            const currentVer = stdout.split(/\n/)[4].slice(1);
+            const currentVer = stdout.slice(1).replace(/\n/, '');
             tauriConfig.package.version = currentVer;
             fs.writeFileSync(`${appDir}/${tauriConfigFile}`, JSON.stringify(tauriConfig, null, 2));
+            return;
         } catch (error) {
+            console.log(error);
             if(process.argv[2] === "set" || process.argv[2] === "s"){
                 console.error('invalid version number! The correct format is [major].[minor].[patch]');
                 console.error('ex. > npm run version set 1.2.3');
