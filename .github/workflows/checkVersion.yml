@@ -6,7 +6,7 @@ on:
         - phaser-release
 
 jobs:
-    check:
+    check-version:
       permissions:
         contents: write
       runs-on: 'ubuntu-22.04'
@@ -24,17 +24,18 @@ jobs:
             node-version: lts/*
             cache: 'npm'
       
+
+
         - uses: actions/checkout@v4
-        - name: Set output
-          id: vars
-          run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-        - name: Check output
-          env:
-            RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-          run: |
-            echo $RELEASE_VERSION
-            echo ${{ steps.vars.outputs.tag }}
-            ls -l
-            cat package.json
-            npm run check-ver ${{ steps.vars.outputs.tag }}
+          with:
+            fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
+        - name: 'Get Previous tag'
+          id: previoustag
+          uses: "WyriHaximus/github-action-get-previous-tag@v1"
+          with:
+            fallback: 0.0.0
+
+        - uses: actions/checkout@v4
+        - name: runing check-ver scriptcheck-version.outputs.previous-tag
+          run: npm run check-ver ${{ steps.previoustag.outputs.previous-tag }}
   

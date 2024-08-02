@@ -8,9 +8,10 @@ function run() {
     const currentTagVersion = process.argv[2].split('v')[1];
     const exec = require('child_process').exec;
     if(!currentTagVersion){
-        throw (`Something went very very VERY wrong, and we got no versions from the latest release. Got [${process.argv[2]}], version [${currentTagVersion}]`)
+        throw (`Something went very very VERY wrong, and we got no versions from the latest release. Got tag [${process.argv[2]}], with version [${currentTagVersion}].\nThe correct format should be [anything really]v*.*.*`)
     }
     exec(`npm version`, (err, stdout) => {
+        if(err) throw ('Something unexpected happened, couldn\'t retrieve version information')
         const packageVersion = stdout.split('\n')[1].split('\'')[3];
         if(packageVersion !== tauriVersion){
             throw ('tauri and package version mismatch!\nPlease run \'npm run ver p\' to fix this problem')
