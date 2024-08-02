@@ -35,5 +35,6 @@ jobs:
             echo $RELEASE_VERSION
             echo ${{ steps.vars.outputs.tag }}
             ls -l
+            cat package.json
             npm run ver-check ${{ steps.vars.outputs.tag }}
   
