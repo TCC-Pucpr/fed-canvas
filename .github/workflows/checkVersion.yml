@@ -37,5 +37,8 @@ jobs:
 
         - uses: actions/checkout@v4
         - name: runing check-ver scriptcheck-version.outputs.previous-tag
-          run: npm run check-ver ${{ steps.previoustag.outputs.previous-tag }}
+          run: |
+            echo steps.previoustag\>${{steps.previoustag}}
+            echo steps.previoustag.outputs.previous-tag\>${{steps.previoustag.outputs.previous-tag}}
+            npm run check-ver ${{ steps.previoustag.outputs.previous-tag }}
   
