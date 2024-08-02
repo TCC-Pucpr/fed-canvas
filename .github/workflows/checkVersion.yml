@@ -24,7 +24,7 @@ jobs:
             node-version: lts/*
             cache: 'npm'
       
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: Set output
           id: vars
           run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
@@ -36,5 +36,5 @@ jobs:
             echo ${{ steps.vars.outputs.tag }}
             ls -l
             cat package.json
-            npm run ver-check ${{ steps.vars.outputs.tag }}
+            npm run check-ver ${{ steps.vars.outputs.tag }}
   
