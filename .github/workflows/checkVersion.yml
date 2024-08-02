@@ -34,5 +34,6 @@ jobs:
           run: |
             echo $RELEASE_VERSION
             echo ${{ steps.vars.outputs.tag }}
+            ls -l
             node ../../scripts/check-version.js ${{ steps.vars.outputs.tag }}
   
