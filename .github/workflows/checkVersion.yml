@@ -23,8 +23,6 @@ jobs:
           with:
             node-version: lts/*
             cache: 'npm'
-      
-
 
         - uses: actions/checkout@v4
           with:
@@ -35,10 +33,6 @@ jobs:
           with:
             fallback: 0.0.0
 
-        - uses: actions/checkout@v4
-        - name: runing check-ver scriptcheck-version.outputs.previous-tag
-          run: |
-            echo steps.previoustag\>${{steps.previoustag.outputs}}
-            echo steps.previoustag.outputs.previous-tag\>${{steps.previoustag.outputs.tag}}
-            npm run check-ver ${{ steps.previoustag.outputs.previous-tag }}
+        - name: checking version
+          run: npm run check-ver ${{ steps.previoustag.outputs.tag }}
   
