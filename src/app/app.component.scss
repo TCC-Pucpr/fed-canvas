@@ -1,0 +1,19 @@
+.btn {
+  width: fit-content;
+  height: fit-content;
+  background-color: lightgray;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+}
+
+.btn:hover {
+  filter: brightness(1.5);
+}
+
+.buttonColumn {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
