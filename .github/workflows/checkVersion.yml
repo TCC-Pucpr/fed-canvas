@@ -33,10 +33,6 @@ jobs:
           with:
             fallback: 0.0.0
 
-        - name: checking version
-          run: npm run check-ver ${{ steps.previoustag.outputs.tag }}
-  
-
         - name: Build Changelog(ubuntu only)
           id: github_release
           uses: mikepenz/release-changelog-builder-action@v5
@@ -45,3 +41,7 @@ jobs:
 
         - name: change logger
           run: echo ${{steps.github_release.outputs.changelog}} 
+
+        - name: checking version
+          run: npm run check-ver ${{ steps.previoustag.outputs.tag }}
+  

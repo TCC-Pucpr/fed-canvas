@@ -43,14 +43,8 @@ function run() {
         const packageSplit = packageVersion.split('.');
 
         for(let i = 0; i < latestVersionSplit.length; i++){
-            if(packageSplit[i] < latestVersionSplit[i]){
-                throwVersionError();
-                return;
-            }
+            if(parseInt(packageSplit[i]) > parseInt(latestVersionSplit[i])) return;
         }
+        throw ('The current package version is lower than the latest!\n Please set a higher version with \'npm run ver s [version]\'')
     });
-}
-
-function throwVersionError() {
-    throw ('The current package version is lower than the latest!\n Please set a higher version with \'npm run ver s [version]\'')
 }
