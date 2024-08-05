@@ -40,7 +40,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         - name: change logger
-          run: echo ${{steps.github_release.outputs.changelog}} 
+          run: echo ${{ '${{steps.github_release.outputs.changelog}}' }}
 
         - name: checking version
           run: npm run check-ver ${{ steps.previoustag.outputs.tag }}
