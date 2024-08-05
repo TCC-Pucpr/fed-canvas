@@ -1,6 +1,7 @@
 export class GameScene extends Phaser.Scene {
 
     public pressArea: Phaser.GameObjects.Rectangle; 
+    public wrongPressArea: Phaser.GameObjects.Rectangle; 
     public limit: Phaser.GameObjects.Rectangle;
     public notes: Phaser.Physics.Arcade.Group;
     public readonly noteSprite: string = "note";
@@ -27,9 +28,11 @@ export class GameScene extends Phaser.Scene {
         }
 
         this.limit = this.add.rectangle(275, 127, 2, 457).setOrigin(0,0);
-        this.pressArea = this.add.rectangle(287, 127, 60, 457).setOrigin(0,0);
+        this.pressArea = this.add.rectangle(287, 127, 80, 457).setOrigin(0,0);
+        this.wrongPressArea = this.add.rectangle(367, 127, 650, 457).setOrigin(0,0);
         this.physics.add.existing(this.limit, true);
         this.physics.add.existing(this.pressArea, true);
+        this.physics.add.existing(this.wrongPressArea, true);
         this.score = 0;
         this.chainCount = 0;
         this.multiplier = 1;
@@ -47,7 +50,8 @@ export class GameScene extends Phaser.Scene {
 
     override update() {
         this.physics.overlap(this.notes, this.limit, this.removeNote, undefined, this);
-        this.physics.overlap(this.notes, this.pressArea, this.pressedNote, undefined, this);
+        this.physics.overlap(this.notes, this.pressArea, this.scoredNote, undefined, this);
+        this.physics.overlap(this.notes, this.wrongPressArea, this.poorNote, undefined, this);
         if(this.isPressed && this.inputs?.space.isUp) {
             this.isPressed = false;
         }
@@ -57,7 +61,17 @@ export class GameScene extends Phaser.Scene {
         this.chainText.setText(`Chain: ${this.chainCount}`);
     }
 
-    public pressedNote(area: any, note: any){
+    public poorNote(area:any, note: any) { 
+        if(!this.isPressed && this.inputs?.space.isDown) {
+            this.isPressed = true;
+            note.destroy();
+            this.createNote();
+            this.score -= 20;
+            this.chainCount = 1;
+        }
+    }
+
+    public scoredNote(area: any, note: any){
         if(!this.isPressed && this.inputs?.space.isDown) {
             this.isPressed = true;
             note.destroy();
