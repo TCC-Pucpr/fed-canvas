@@ -1,6 +1,6 @@
 {
   "name": "fed-tauri-phaser",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "tauri": "tauri",
     "native": "tauri dev",
-    "build-native": "export NO_STRIP=true && tauri build",
+    "build-native": "export NO_STRIP=true && cp node_modules/phaser/dist/phaser.min.js src/assets && tauri build",
     "ver": "node scripts/update-version.js",
     "check-ver": "node scripts/check-version.js"
   },

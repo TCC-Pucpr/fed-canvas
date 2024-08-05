@@ -88,7 +88,7 @@ export class GameScene extends Phaser.Scene {
         }
         y += 203;
         const xOffset = Phaser.Math.Between(0, 10)*10;
-        this.notes.create(980-xOffset, y, 'note').setVelocityX(-400).setBounceX(1);
+        this.notes.create(980-xOffset, y, 'note').setVelocityX(-100);
     }
 
     public removeNote(limit: any, note: any): void {
