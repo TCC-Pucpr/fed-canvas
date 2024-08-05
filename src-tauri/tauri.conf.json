@@ -3,11 +3,11 @@
     "beforeDevCommand": "npm run start",
     "beforeBuildCommand": "npm run build",
     "devPath": "http://localhost:1420",
-    "distDir": "../dist/fed-tauri-phaser/browser"
+    "distDir": "../dist/fed-inspirasom/browser"
   },
   "package": {
-    "productName": "fed-tauri-phaser",
-    "version": "0.4.4"
+    "productName": "fed-inspirasom",
+    "version": "0.5.1"
   },
   "tauri": {
     "allowlist": {
@@ -19,9 +19,9 @@
     },
     "windows": [
       {
-        "title": "fed-tauri-phaser",
-        "width": 800,
-        "height": 600
+        "title": "Inspirasom",
+        "width": 1280,
+        "height": 720
       }
     ],
     "security": {
@@ -30,7 +30,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.inspirasom.prod",
+      "identifier": "com.inspirasom.dev",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",

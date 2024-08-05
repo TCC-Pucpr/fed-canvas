@@ -1,6 +1,6 @@
 {
-  "name": "fed-tauri-phaser",
-  "version": "0.4.4",
+  "name": "fed-inspirasom",
+  "version": "0.5.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +10,8 @@
     "native": "tauri dev",
     "build-native": "export NO_STRIP=true && cp node_modules/phaser/dist/phaser.min.js src/assets && tauri build",
     "ver": "node scripts/update-version.js",
-    "check-ver": "node scripts/check-version.js"
+    "check-ver": "node scripts/check-version.js",
+    "release-notes": "node scripts/get-release-notes.js"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,8 @@
     "@angular/router": "^17.0.0",
     "@tauri-apps/api": "^1",
     "phaser": "^3.80.1",
+    "primeicons": "^7.0.0",
+    "primeng": "^17.18.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
