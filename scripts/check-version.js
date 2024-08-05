@@ -1,4 +1,4 @@
-const tauriConfigFile = '../src-tauri/tauri.conf.json';
+    const tauriConfigFile = '../src-tauri/tauri.conf.json';
 
 run();
 

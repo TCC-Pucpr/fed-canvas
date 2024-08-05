@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
-import { invoke } from "@tauri-apps/api/tauri";
+import { RouterOutlet } from '@angular/router';
+import { RustDataSourceService } from './core/services/rust/dataSource/rust-dataSource.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +12,21 @@ import { invoke } from "@tauri-apps/api/tauri";
 })
 export class AppComponent {
 
-  constructor(
-    protected router: Router
-  ){
+    constructor(
+        private rustInvoker: RustDataSourceService
+    ) {
+    }
 
-  }
+    greetingMessage = "";
+    isListeningMidi = false;
 
+    greet(event: SubmitEvent, name: string): void {
+        event.preventDefault();
+        if (this.isListeningMidi) {
+            this.rustInvoker.stop_midi();
+        } else {
+            this.rustInvoker.connect_midi();
+        }
+        this.isListeningMidi = !this.isListeningMidi;
+    }
 }

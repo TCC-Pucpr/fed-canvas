@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NothingComponent } from './nothing.component';
+import { GamificadaComponent } from './gamificada.component';
 
-describe('NothingComponent', () => {
-  let component: NothingComponent;
-  let fixture: ComponentFixture<NothingComponent>;
+describe('MenuGamificadoComponent', () => {
+  let component: GamificadaComponent;
+  let fixture: ComponentFixture<GamificadaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NothingComponent]
+      imports: [GamificadaComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NothingComponent);
+    fixture = TestBed.createComponent(GamificadaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
