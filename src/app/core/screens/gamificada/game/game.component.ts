@@ -5,7 +5,7 @@ import { GameScene } from './scenes/Game.scene';
 import { BootUtils } from './scenes/BootUtils.scene';
 
 @Component({
-  selector: 'app-game',
+  selector: 'phaser-game',
   standalone: true,
   imports: [],
   template: '<div id="phaser-game-component"></div>',

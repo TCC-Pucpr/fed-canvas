@@ -6,7 +6,7 @@
     "analytics": false
   },
   "projects": {
-    "fed-tauri-phaser": {
+    "fed-inspirasom": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
@@ -15,22 +15,26 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/fed-tauri-phaser",
+            "outputPath": "dist/fed-inspirasom",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/assets"],
             "scripts": ["node_modules/phaser/dist/phaser.min.js"],
-            "allowedCommonJsDependencies": ["phaser"]
+            "styles": [
+              "src/styles.scss",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10mb",
-                  "maximumError": "20mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -55,13 +59,18 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "fed-tauri-phaser:build:production"
+              "buildTarget": "fed-inspirasom:build:production"
             },
             "development": {
-              "buildTarget": "fed-tauri-phaser:build:development"
+              "buildTarget": "fed-inspirasom:build:development"
             }
           },
           "defaultConfiguration": "development"
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
         }
       }
     }

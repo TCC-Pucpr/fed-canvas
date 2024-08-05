@@ -1,9 +1,15 @@
-import { Routes } from "@angular/router";
-import { NothingComponent } from "./nothing/nothing.component";
-import { GameComponent } from "./game/game.component";
+import { Routes, provideRouter } from "@angular/router";
+import { ApplicationConfig } from "@angular/core";
+import { GamificadaComponent } from "./core/screens/gamificada/gamificada.component";
+import { MenuDashboardsComponent } from "./core/screens/menu-dashboards/menu-dashboards.component";
 
 export const routes: Routes = [
-    { path: 'game', component: GameComponent },
-    { path: "nothing", component: NothingComponent },
-    { path: "**", redirectTo: 'nothing' },
+    { path: 'dashboards', component: MenuDashboardsComponent },
+    { path: 'gamificada', component: GamificadaComponent },
+    { path: '**', redirectTo: 'dashboards' }
 ];
+
+export const routesConfig: ApplicationConfig = {
+    providers: [provideRouter(routes)],
+};
+  
