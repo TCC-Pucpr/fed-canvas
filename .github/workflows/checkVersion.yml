@@ -36,3 +36,12 @@ jobs:
         - name: checking version
           run: npm run check-ver ${{ steps.previoustag.outputs.tag }}
   
+
+        - name: Build Changelog(ubuntu only)
+          id: github_release
+          uses: mikepenz/release-changelog-builder-action@v5
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: change logger
+          run: echo ${{steps.github_release.outputs.changelog}} 

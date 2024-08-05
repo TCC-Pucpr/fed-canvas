@@ -1,9 +1,9 @@
 ## inspirasom v0.1.2
-### Changed
+### Changes
 - #27 Integração com a framework phaser;
     - Automatização de releases e versionamento do projeto;
     - Refatoramento do projeto para utilizar a framework Phaser3;
-- #26 Resolução através da 27
+- #26 Resolução através da #27
 
 ## inspirasom v0.0.11
 ### Changes

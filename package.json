@@ -10,7 +10,8 @@
     "native": "tauri dev",
     "build-native": "export NO_STRIP=true && cp node_modules/phaser/dist/phaser.min.js src/assets && tauri build",
     "ver": "node scripts/update-version.js",
-    "check-ver": "node scripts/check-version.js"
+    "check-ver": "node scripts/check-version.js",
+    "release-notes": "node scripts/get-release-notes.js"
   },
   "private": true,
   "dependencies": {
