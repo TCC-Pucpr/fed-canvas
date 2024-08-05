@@ -59,13 +59,21 @@ jobs:
       - name: setup phaser for local lib access
         run: cp node_modules/phaser/dist/phaser.min.js src/assets
 
+
+      - name: Build Changelog(ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: inspirasom-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
           releaseName: 'Inspirasom v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseBody: ${{steps.github_release.outputs.changelog}}
           releaseDraft: false
           prerelease: true
           args: ${{ matrix.args }}
