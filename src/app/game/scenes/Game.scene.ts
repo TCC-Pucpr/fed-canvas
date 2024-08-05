@@ -22,11 +22,6 @@ export class GameScene extends Phaser.Scene {
 
     preload() {
         this.add.image(0, 0, 'background').setOrigin(0, 0);
-        this.notes = this.physics.add.group();
-        for(let i = 0; i < 5; i++){
-            this.createNote(i);
-        }
-
         this.limit = this.add.rectangle(275, 127, 2, 457).setOrigin(0,0);
         this.pressArea = this.add.rectangle(287, 127, 80, 457).setOrigin(0,0);
         this.wrongPressArea = this.add.rectangle(367, 127, 650, 457).setOrigin(0,0);
@@ -42,6 +37,11 @@ export class GameScene extends Phaser.Scene {
         this.multiplierText = this.add.text(50, 75, '', { color: 'white' }).setOrigin(0, 0);
         this.chainText = this.add.text(50, 100, '', { color: 'white' }).setOrigin(0, 0);
         this.add.text(0, 0, 'Press [space] to hit the note', { color: 'white' }).setOrigin(0, 0);
+
+        this.notes = this.physics.add.group();
+        for(let i = 0; i < 5; i++){
+            this.createNote(i);
+        }
     }
 
     create() {
@@ -101,8 +101,7 @@ export class GameScene extends Phaser.Scene {
             y *= 20;
         }
         y += 203;
-        const xOffset = Phaser.Math.Between(0, 10)*10;
-        this.notes.create(980-xOffset, y, 'note').setVelocityX(-100);
+        this.notes.create(980, y, 'note').setVelocityX(-100);
     }
 
     public removeNote(limit: any, note: any): void {
