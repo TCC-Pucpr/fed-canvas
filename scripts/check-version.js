@@ -27,21 +27,12 @@ function run() {
         const latestVersionSplit = latestVersion.split('.');
         const packageSplit = packageVersion.split('.');
 
-        if(packageSplit[0] < latestVersionSplit[0]) {
-            throwVersionError();
-            return;
+        for(let i = 0; i < latestVersionSplit.length; i++){
+            if(packageSplit[i] < latestVersionSplit[i]){
+                throwVersionError();
+                return;
+            }
         }
-
-        if(packageSplit[1] < latestVersionSplit[1]) {
-            throwVersionError();
-            return;
-        }
-
-        if(packageSplit[2] < latestVersionSplit[2]) {
-            throwVersionError();
-            return;
-        }
-
     });
 }
 
